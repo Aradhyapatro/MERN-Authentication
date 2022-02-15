@@ -8,6 +8,7 @@ import { default as Reset } from "./components/screens/Reset";
 import { default as Home } from "./components/screens/Home";
 import { default as Failed } from "./components/screens/Failed";
 import Declaration from "./components/screens/Declaration";
+import PasswordChanged from "./components/screens/PasswordChanged";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/resetpassword/:token" element={<Reset />} />
           <Route path="/failed" element={<Failed />} />
           <Route path="/declaration" element={<Declaration />} />
+          <Route path="/passwordChanged" element={<PasswordChanged />} />
         </Routes>
       </div>
     </Router>
