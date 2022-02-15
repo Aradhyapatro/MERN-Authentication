@@ -1,22 +1,22 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Reset = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const token = useParams();
+  console.log(token);
 
   const navigate = useNavigate();
 
   const handleReset = async () => {
-    const token = localStorage.getItem("auth");
     if (password === confirmPassword) {
       const resp = await axios.put(
         `/api/auth/resetpassword/${token}`,
         { password },
         { "Content-Type": "application/json" }
       );
-
       const { data } = { ...resp };
       if (data.success === true) {
         navigate("/passwordChanged");
@@ -41,7 +41,7 @@ const Reset = () => {
           />
         </div>
         <div className="credentrials">
-          <label htmlFor="confirmPassword">Password</label>
+          <label htmlFor="confirmPassword">Confirm Password</label>
           <input
             value={confirmPassword}
             onChange={(e) => {
