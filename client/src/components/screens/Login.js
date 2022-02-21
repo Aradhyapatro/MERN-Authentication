@@ -1,39 +1,46 @@
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import { axios } from "axios";
 import "./Login.css";
+const axios = require("axios");
+
 const Login = () => {
-  const [user_email, setUser_email] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  let navigate = useNavigate();
 
   const handleLogin = async () => {
     console.log("Enter axios");
-    axios
-      .post("/api/auth/login", {
-        email: user_email,
-        password: password,
-      })
-      .then((resp) => {
-        console.log("Logged in");
-        console.log(resp);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const url = "/api/auth/login";
+    let resp = await axios.post(url, {
+      email,
+      password,
+    });
+    const { data } = { ...resp };
+
+    if (data.success === true) {
+      localStorage.setItem("auth", data.token);
+      console.log("Logged");
+      navigate(`/home`);
+    } else {
+      localStorage.removeItem("auth");
+      navigate(`/failed`);
+    }
   };
 
   return (
     <div>
       <article className="div">
         <div className="credentrials">
-          <label htmlFor="user_email">Username</label>
+          <label htmlFor="email">Username</label>
           <input
             type="text"
             autoComplete="off"
-            id="user_email"
+            id="email"
             className="input"
-            value={user_email}
+            value={email}
             onChange={(e) => {
-              setUser_email(e.target.value);
+              setEmail(e.target.value);
             }}
           />
 
@@ -49,6 +56,9 @@ const Login = () => {
             autoComplete="false"
           />
         </div>
+        <p>
+          <Link to={`/forgotPassword`}>Forgot my password</Link>
+        </p>
         <button
           onClick={() => {
             handleLogin();

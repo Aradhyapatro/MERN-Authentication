@@ -5,16 +5,24 @@ import { default as Login } from "./components/screens/Login";
 import { default as Register } from "./components/screens/Register";
 import { default as ForgotPass } from "./components/screens/ForgotPass";
 import { default as Reset } from "./components/screens/Reset";
+import { default as Home } from "./components/screens/Home";
+import { default as Failed } from "./components/screens/Failed";
+import Declaration from "./components/screens/Declaration";
+import PasswordChanged from "./components/screens/PasswordChanged";
 
 const App = () => {
   return (
     <Router>
       <div className="App">
         <Routes>
+          <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgotPassword" element={<ForgotPass />} />
-          <Route path="/resetpassword/:token" element={<Reset />} />
+          <Route path="/api/auth/resetpassword/:token" element={<Reset />} />
+          <Route path="/failed" element={<Failed />} />
+          <Route path="/declaration" element={<Declaration />} />
+          <Route path="/passwordChanged" element={<PasswordChanged />} />
         </Routes>
       </div>
     </Router>
